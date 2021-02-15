@@ -36,32 +36,26 @@ money.addMoneyCallback = (data) => {
     ApiConnector.addMoney(data, (response) => {
         if (response.success) {
             ProfileWidget.showProfile(response.data);
-            money.setMessage(true, 'Действие выполнено успешно');
-        } else {
-            money.setMessage(false, 'Ошибка выполнения');
         }
+        money.setMessage(response.success, response.success ? 'Денежные средства успешно поступили на счет' : response.error);
     });
 }
 
 money.conversionMoneyCallback = (data) => {
-    ApiConnector.convertMoney(data, (response) => {
+    ApiConnector.addMoney(data, (response) => {
         if (response.success) {
             ProfileWidget.showProfile(response.data);
-            money.setMessage(true, 'Действие выполнено успешно');
-        } else {
-            money.setMessage(false, 'Ошибка выполнения');
         }
+        money.setMessage(response.success, response.success ? 'Конвертация валюты прошла успешно' : response.error);
     });
 }
 
 money.sendMoneyCallback = (data) => {
-    ApiConnector.transferMoney(data, (response) => {
+    ApiConnector.addMoney(data, (response) => {
         if (response.success) {
             ProfileWidget.showProfile(response.data);
-            money.setMessage(true, 'Действие выполнено успешно');
-        } else {
-            money.setMessage(false, 'Ошибка выполнения');
         }
+        money.setMessage(response.success, response.success ? 'Денежные средства отправлены успешно' : response.error);
     });
 }
 
@@ -81,10 +75,8 @@ favorite.addUserCallback = () => {
             favorite.clearTable();
             favorite.fillTable(response.data);
             money.updateUsersList(response.data);
-            favorite.setMessage(true, 'Действие выполнено успешно');
-        } else {
-            favorite.setMessage(false, 'Ошибка выполнения');
-        }
+        } 
+        favorite.setMessage(response.success, response.success ? 'Новый контакт добавлен успешно' : response.error);
     });
 }
 
@@ -94,9 +86,7 @@ favorite.removeUserCallback = () => {
             favorite.clearTable();
             favorite.fillTable(response.data);
             money.updateUsersList(response.data);
-            favorite.setMessage(true, 'Действие выполнено успешно');
-        } else {
-            favorite.setMessage(false, 'Ошибка выполнения');
-        }
+        } 
+        favorite.setMessage(response.success, response.success ? 'Контакт успешно удален из Адресной книги' : response.error);
     });
 }
